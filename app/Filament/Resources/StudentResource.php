@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\StudentResource\Pages;
-use App\Filament\Resources\StudentResource\RelationManagers;
-use App\Models\Student;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Student;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\StudentResource\RelationManagers;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 
 class StudentResource extends Resource
 {
@@ -23,7 +27,19 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Card::make()
+                    ->schema([
+                        TextInput::make('nim')->required(),
+                        TextInput::make('nama')->required(),
+                        Select::make('fakultas')->options([
+                            'MIPA' => 'MIPA',
+                            'SI' => 'SI',
+                            'TI' => 'TI',
+                            
+
+                    ]),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -31,7 +47,10 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('nim')->sortable()->searchable(),
+                TextColumn::make('nama')->sortable()->searchable(),
+                TextColumn::make('fakultas')->sortable()->searchable(),
+
             ])
             ->filters([
                 //
